@@ -1,13 +1,10 @@
-package nl.techiteasy.Techiteasy_part2.Model;
+package nl.techiteasy.Techiteasy_part2.Dto.InputDto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import nl.techiteasy.Techiteasy_part2.Dto.OutputDto.TelevisionOutputDto;
+import nl.techiteasy.Techiteasy_part2.Model.Television;
 
-@Entity
-public class Television {
-    @Id
-    @GeneratedValue
+public class TelevisionInputDto {
+
     public Long id;
     public String type;
     public String brand;
@@ -25,9 +22,6 @@ public class Television {
     public boolean ambilight;
     public int originalStock;
     public int sold;
-
-    public Television() {
-    }
 
     public Long getId() {
         return id;
