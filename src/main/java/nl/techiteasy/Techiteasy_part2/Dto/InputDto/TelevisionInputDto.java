@@ -1,11 +1,11 @@
 package nl.techiteasy.Techiteasy_part2.Dto.InputDto;
 
-import nl.techiteasy.Techiteasy_part2.Dto.OutputDto.TelevisionOutputDto;
-import nl.techiteasy.Techiteasy_part2.Model.Television;
+import jakarta.validation.constraints.NotNull;
 
 public class TelevisionInputDto {
 
     public Long id;
+    @NotNull
     public String type;
     public String brand;
     public String name;

@@ -1,11 +1,10 @@
 package nl.techiteasy.Techiteasy_part2.Controllers;
 
 import jakarta.validation.Valid;
+import nl.techiteasy.Techiteasy_part2.Dto.InputDto.IdInputDto;
 import nl.techiteasy.Techiteasy_part2.Dto.InputDto.TelevisionInputDto;
-import nl.techiteasy.Techiteasy_part2.Dto.OutputDto.TelevisionOutputDto;
-import nl.techiteasy.Techiteasy_part2.Exceptions.ObjectNameTooLongException;
+import nl.techiteasy.Techiteasy_part2.Dto.OutputDto.TelevisionDto;
 import nl.techiteasy.Techiteasy_part2.Exceptions.RecordNotFoundException;
-import nl.techiteasy.Techiteasy_part2.Model.Television;
 import nl.techiteasy.Techiteasy_part2.Services.TelevisionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-@RequestMapping("television")
+@RequestMapping("televisions")
 @RestController
 public class TelevisionController {
-    private List<Television> televisions = new ArrayList<>();
 
     private final TelevisionService service;
 
@@ -29,14 +26,14 @@ public class TelevisionController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<TelevisionOutputDto>> getAllTelevisions(){
-        List<TelevisionOutputDto> televisionOutputDto = service.getAllTelevisions();
+    public ResponseEntity<List<TelevisionDto>> getAllTelevisions(){
+        List<TelevisionDto> televisionOutputDto = service.getAllTelevisions();
         return ResponseEntity.ok(televisionOutputDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TelevisionOutputDto> getTelevisionById(@PathVariable Long id) {
-        TelevisionOutputDto televisionOutputDto = new TelevisionOutputDto();
+    public ResponseEntity<TelevisionDto> getTelevisionById(@PathVariable Long id) {
+        TelevisionDto televisionOutputDto = new TelevisionDto();
         televisionOutputDto = service.getTelevisionById(id);
         return ResponseEntity.ok(televisionOutputDto);
     }
@@ -53,17 +50,26 @@ public class TelevisionController {
             return new ResponseEntity<>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        TelevisionOutputDto teleOutputDto = service.createTelevision(teleInDto);
+        TelevisionDto teleOutputDto = service.createTelevision(teleInDto);
 
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentRequest().path("/" + teleInDto.getId()).toUriString());
         return ResponseEntity.created(uri).body(teleInDto);
     }
 
     @PutMapping("/{id}")
-        public ResponseEntity<TelevisionOutputDto> updateTelevision(@PathVariable Long id, @RequestBody TelevisionInputDto teleInDto) {
-        TelevisionOutputDto teleOutputDto = service.updateTelevision(id, teleInDto);
+        public ResponseEntity<TelevisionDto> updateTelevision(@PathVariable Long id, @RequestBody TelevisionInputDto teleInDto) {
+        TelevisionDto teleOutputDto = service.updateTelevision(id, teleInDto);
         return ResponseEntity.ok().body(teleOutputDto);
- }
+    }
+
+    @PutMapping("/{id}/remoteController")
+    public void assignRemoteControllerToTelevision (@PathVariable("id") Long id, @Valid @RequestBody IdInputDto input) {
+        service.assignRemoteControllerToTelevision(id, input.id);
+
+    }
+
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> removeTelevision (@PathVariable Long id) {
