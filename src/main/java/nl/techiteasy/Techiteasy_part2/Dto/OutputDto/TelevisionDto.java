@@ -1,13 +1,6 @@
-package nl.techiteasy.Techiteasy_part2.Model;
+package nl.techiteasy.Techiteasy_part2.Dto.OutputDto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
-@Entity
-public class Television {
-    @Id
-    @GeneratedValue
+public class TelevisionDto {
     public Long id;
     public String type;
     public String brand;
@@ -26,7 +19,9 @@ public class Television {
     public int originalStock;
     public int sold;
 
-    public Television() {
+    public RemoteControllerDto remoteController;
+
+    public TelevisionDto() {
     }
 
     public Long getId() {

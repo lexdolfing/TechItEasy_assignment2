@@ -1,8 +1,14 @@
-package nl.techiteasy.Techiteasy_part2.Dto.OutputDto;
+package nl.techiteasy.Techiteasy_part2.Models;
 
-import nl.techiteasy.Techiteasy_part2.Model.Television;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
-public class TelevisionOutputDto {
+@Entity
+public class Television {
+    @Id
+    @GeneratedValue
     public Long id;
     public String type;
     public String brand;
@@ -20,6 +26,19 @@ public class TelevisionOutputDto {
     public boolean ambilight;
     public int originalStock;
     public int sold;
+    @OneToOne
+    private RemoteController remoteController;
+
+    public Television() {
+    }
+
+    public RemoteController getRemoteController() {
+        return remoteController;
+    }
+
+    public void setRemoteController(RemoteController remoteController) {
+        this.remoteController = remoteController;
+    }
 
     public Long getId() {
         return id;
